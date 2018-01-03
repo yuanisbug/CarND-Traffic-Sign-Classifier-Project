@@ -35,7 +35,7 @@ signs data set:
 
 ####2. Include an exploratory visualization of the dataset.
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+Here is an exploratory visualization of the data set. It is a bar chart showing how the data is distributed of different classes throughout the training dataset based on 43 classes of `signnames.csv`.
 
 ![alt text][image1]
 
@@ -43,29 +43,48 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-As a first step, I decided to convert the images to grayscale because ...
+As a first step, I decided to convert the images to grayscale because using grayscale is a normal way to find the edge using Canny transform.
 
 Here is an example of a traffic sign image before and after grayscaling.
 
 ![alt text][image2]
 ![alt text][image22]
 
-As a last step, I normalized the image data because ...
+As a last step, I normalized the image data because this normalization of the pre-processing can improve the performance of the LeNet.
 
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image22]
-
-The difference between the original data set and the augmented data set is the following ... 
+I decided not to generate additional data because it slow down the pooling and training.
 
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
 My final model consisted of the following layers:
+
+```
+
+Layer 1: Convolutional. Input = 32x32x1. Output = 28x28x12
+
+Layer 2: Convolutional. Input = 14x14x12, Output = 10x10x16
+
+Layer 3: Fully Connected. Input = 400. Output = 120
+
+Layer 4: Fully Connected. Input = 120. Output = 84
+
+Layer 5: Fully Connected. Input = 84. Output = 43
+
+
+```
+
+####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+
+To train the model, I used an model like this:
+
+```
+
+EPOCH = 15
+BATCH_SIZE = 128
+
+
+
 Training...
 
 EPOCH 1 ...
@@ -133,10 +152,7 @@ Model saved
 INFO:tensorflow:Restoring parameters from ./lenet
 Test Accuracy = 0.8965
 
-
-####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
-
-To train the model, I used an ....
+```
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
@@ -145,17 +161,13 @@ My final model results were:
 * validation set accuracy of 1
 * test set accuracy of 1
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
 If a well known architecture was chosen:
 * What architecture was chosen?
+LeNet
 * Why did you believe it would be relevant to the traffic sign application?
+As the lesson 2 in the project introduced that the LeNet would be an excellent architecture to classifying traffic signs.
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+100%. Showing a perfect architecture to classifying traffic signs.
  
 
 ###Test a Model on New Images
@@ -167,7 +179,7 @@ Here are five German traffic signs that I found on the web:
 ![alt text][image4] ![alt text][image5] ![alt text][image6] 
 ![alt text][image7] ![alt text][image8]
 
-The first image might be difficult to classify because ...
+The 2/3/4/5 image might be difficult to classify because they are very dark and hard to distinguish using bare eyes.
 
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -176,7 +188,7 @@ Here are the results of the prediction:
 INFO:tensorflow:Restoring parameters from ./lenet
 Test Accuracy = 1.0000
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 5 of the 5 traffic signs, which gives an accuracy of 100%. 
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
@@ -184,7 +196,8 @@ The code for making predictions on my final model is located in the 11th cell of
 
 For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
 
-# (5, 6) array
+```
+(5, 6) array
 a = np.array([[ 0.24879643,  0.07032244,  0.12641572,  0.34763842,  0.07893497,
          0.12789202],
        [ 0.28086119,  0.27569815,  0.08594638,  0.0178669 ,  0.18063401,
@@ -207,4 +220,4 @@ TopKV2(values=array([[ 0.34763842,  0.24879643,  0.12789202],
        [1, 3, 5],
        [1, 4, 3]], dtype=int32))
 
-
+```
